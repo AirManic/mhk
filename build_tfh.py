@@ -2,7 +2,7 @@
 
 """
 Author: Nick Russo (nickrus@cisco.com)
-Purpose: Build a new Surge Hospital Kit (SHK) configuration set.
+Purpose: Build a new Temporary Field Hospital (TFH) configuration set.
 """
 
 import random
@@ -28,7 +28,7 @@ def main():
     if not os.path.exists("outputs"):
         os.makedirs("outputs")
 
-    # Only generate one hub config for the entire SHK run
+    # Only generate one hub config for the entire TFH run
     j2_env = Environment(loader=FileSystemLoader("."), autoescape=True)
     template = j2_env.get_template("templates/hub.j2")
     config = template.render(data=initial["hub"])
@@ -37,11 +37,11 @@ def main():
     with open(f"outputs/hub.txt", "w") as handle:
         handle.write(config)
 
-    # Collect all SHK template files once (not in loop)
-    template_files = glob.glob("templates/shk/*.j2")
+    # Collect all TFH template files once (not in loop)
+    template_files = glob.glob("templates/tfh/*.j2")
 
     # Iterate over each node in the node_list with a counter
-    for i, node in enumerate(initial["shk"]):
+    for i, node in enumerate(initial["tfh"]):
         # Extract data for each node and update index with offset
         data = process_node(node)
         data["index"] = i + node["index_offset"]
@@ -72,7 +72,7 @@ def create_zip(path_to_zip):
     """
     Create ZIP archive of entire outputs/ directory for easy transporation.
     """
-    with ZipFile("shk_configs.zip", "w") as handle:
+    with ZipFile("tfh_configs.zip", "w") as handle:
         for filename in glob.glob(f"{path_to_zip}/**", recursive=True):
             handle.write(filename)
 
@@ -126,7 +126,7 @@ def process_node(node):
     }
 
     # Assemble WLANs with SSID names and random plain-text PSKs
-    ssid_prefix = f"SHK-{node['telephony_prefix']}"
+    ssid_prefix = f"TFH-{node['telephony_prefix']}"
     wlan = {
         "data": {"ssid": f"{ssid_prefix}-DATA", "psk": generate_psk()},
         "biomed": {"ssid": f"{ssid_prefix}-BIOMED", "psk": generate_psk()},

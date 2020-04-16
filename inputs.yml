@@ -11,11 +11,11 @@ hub:
     hospital_peer: 192.0.2.129
     hospital_asn: 65002
 
-shk:
+tfh:
   - telephony_prefix: 101
     ipv4_network: 192.168.0.0/22
     domain_name: hospital.com
-    dmvpn_target: shkhub.hospital.com
+    dmvpn_target: tfhhub.hospital.com
     index_offset: 0
   - telephony_prefix: 102
     ipv4_network: 192.168.4.0/22

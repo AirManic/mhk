@@ -16,10 +16,10 @@ ip dhcp snooping
 ip dhcp snooping vlan 10,20,30,50,90
 no ip dhcp snooping information option
 no ip dhcp conflict logging
-hostname SHK-102-DSW
+hostname TFH-102-DSW
 ip domain-name hospital.com
-username SHK-102-ADMIN privilege 15 secret k7kwIfrz1ufp
-enable secret k7kwIfrz1ufp
+username TFH-102-ADMIN privilege 15 secret SqfFl6CSeY5U
+enable secret SqfFl6CSeY5U
 vtp mode off
 spanning-tree vlan 1-4094 priority 0
 spanning-tree mode rapid-pvst
@@ -653,7 +653,7 @@ interface Vlan90
  ip verify unicast source reachable-via rx
  no shutdown
 !
-router eigrp SHK
+router eigrp TFH
  !
  address-family ipv4 unicast autonomous-system 1
   !

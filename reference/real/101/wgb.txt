@@ -3,11 +3,11 @@ service timestamps debug datetime msec
 service timestamps log datetime msec
 service password-encryption
 !
-hostname SHK-101-WGB
+hostname TFH-101-WGB
 !
 logging rate-limit console 9
-username SHK-101-ADMIN password f8XIXGSQz9tr
-enable secret f8XIXGSQz9tr
+username TFH-101-ADMIN password SjB4jC2YWEjM
+enable secret SjB4jC2YWEjM
 !
 no aaa new-model
 no ip source-route
@@ -23,34 +23,27 @@ ip dhcp pool POOL_Cisco8821-Provision
 dot11 pause-time 100
 dot11 syslog
 !
-dot11 ssid SHK-101-DATA
-authentication open
-authentication key-management wpa version 2
-wpa-psk ascii DrTD9XEi
+dot11 ssid TFH-101-DATA
+ authentication open
+ authentication key-management wpa version 2
+ wpa-psk ascii wkngrxIm
 !
-dot11 ssid SHK-101-BIOMED
-authentication open
-authentication key-management wpa version 2
-wpa-psk ascii G8zTMWl7
+dot11 ssid TFH-101-BIOMED
+ authentication open
+ authentication key-management wpa version 2
+ wpa-psk ascii jqqnxxsa
 !
-dot11 ssid SHK-101-VOICE
-authentication open
-authentication key-management wpa version 2
-wpa-psk ascii IFer4F9R
+dot11 ssid TFH-101-VOICE
+ authentication open
+ authentication key-management wpa version 2
+ wpa-psk ascii plQta8eC
 !
 dot11 ssid cisco
-authentication open
-!
-!
+ authentication open
 !
 no ipv6 cef
 !
-!
-!
-!
 bridge irb
-!
-!
 !
 interface Dot11Radio0
  no ip address
@@ -70,7 +63,7 @@ interface Dot11Radio1
  no ip address
  shutdown
  encryption mode ciphers aes-ccm
- ssid SHK-101-DATA
+ ssid TFH-101-DATA
  antenna gain 0
  peakdetect
  stbc

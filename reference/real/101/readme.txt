@@ -1,9 +1,9 @@
-login username: SHK-101-ADMIN
-login password: f8XIXGSQz9tr
-enable password: f8XIXGSQz9tr
+login username: TFH-101-ADMIN
+login password: SjB4jC2YWEjM
+enable password: SjB4jC2YWEjM
 
 domain name: hospital.com
-dmvpn target: shkhub.hospital.com
+dmvpn target: tfhhub.hospital.com
 
 3-digit telephony prefix: 101
 -------------------------------
@@ -64,6 +64,6 @@ Addressing on asw5:
 
 
 WLANs (SSID and PSK):
-- data: SHK-101-DATA / DrTD9XEi
-- biomed: SHK-101-BIOMED / G8zTMWl7
-- voice: SHK-101-VOICE / IFer4F9R
+- data: TFH-101-DATA / wkngrxIm
+- biomed: TFH-101-BIOMED / jqqnxxsa
+- voice: TFH-101-VOICE / plQta8eC

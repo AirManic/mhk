@@ -16,7 +16,7 @@ ip dhcp snooping
 ip dhcp snooping vlan 10,20,30,50,90
 no ip dhcp snooping information option
 no ip dhcp conflict logging
-hostname SHK-{{ data["telephony_prefix"] }}-DSW
+hostname TFH-{{ data["telephony_prefix"] }}-DSW
 ip domain-name {{ data["domain_name"] }}
 username {{ data["creds"]["username"] }} privilege 15 secret {{ data["creds"]["password"] }}
 enable secret {{ data["creds"]["password"] }}
@@ -191,7 +191,7 @@ interface Vlan90
  ip verify unicast source reachable-via rx
  no shutdown
 !
-router eigrp SHK
+router eigrp TFH
  !
  address-family ipv4 unicast autonomous-system 1
   !

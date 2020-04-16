@@ -3,11 +3,11 @@ service timestamps debug datetime msec
 service timestamps log datetime msec
 service password-encryption
 !
-hostname SHK-102-WGB
+hostname TFH-102-WGB
 !
 logging rate-limit console 9
-username SHK-102-ADMIN password k7kwIfrz1ufp
-enable secret k7kwIfrz1ufp
+username TFH-102-ADMIN password SqfFl6CSeY5U
+enable secret SqfFl6CSeY5U
 !
 no aaa new-model
 no ip source-route
@@ -23,34 +23,27 @@ ip dhcp pool POOL_Cisco8821-Provision
 dot11 pause-time 100
 dot11 syslog
 !
-dot11 ssid SHK-102-DATA
-authentication open
-authentication key-management wpa version 2
-wpa-psk ascii 2DE56Ga1
+dot11 ssid TFH-102-DATA
+ authentication open
+ authentication key-management wpa version 2
+ wpa-psk ascii EE21mrF5
 !
-dot11 ssid SHK-102-BIOMED
-authentication open
-authentication key-management wpa version 2
-wpa-psk ascii OaeWTyTH
+dot11 ssid TFH-102-BIOMED
+ authentication open
+ authentication key-management wpa version 2
+ wpa-psk ascii MX2MLM24
 !
-dot11 ssid SHK-102-VOICE
-authentication open
-authentication key-management wpa version 2
-wpa-psk ascii otQf6BQZ
+dot11 ssid TFH-102-VOICE
+ authentication open
+ authentication key-management wpa version 2
+ wpa-psk ascii 73dt3s0C
 !
 dot11 ssid cisco
-authentication open
-!
-!
+ authentication open
 !
 no ipv6 cef
 !
-!
-!
-!
 bridge irb
-!
-!
 !
 interface Dot11Radio0
  no ip address
@@ -70,7 +63,7 @@ interface Dot11Radio1
  no ip address
  shutdown
  encryption mode ciphers aes-ccm
- ssid SHK-102-DATA
+ ssid TFH-102-DATA
  antenna gain 0
  peakdetect
  stbc

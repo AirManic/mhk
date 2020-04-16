@@ -5,12 +5,12 @@
 {# CHANGE ALL "-101-" references to kit designation #}
 
 {# needs to be unique across some context.  actual name format is not sacred.. just needs to be unique #}
-config sysname SHK-{{ data["telephony_prefix"] }}-WLC
-config prompt SHK-{{ data["telephony_prefix"] }}-WLC
+config sysname TFH-{{ data["telephony_prefix"] }}-WLC
+config prompt TFH-{{ data["telephony_prefix"] }}-WLC
 
 {# Mobility Group & RF Group unique per kit #}
-config mobility group domain SHK-{{ data["telephony_prefix"] }}-MG
-config network rf-network-name SHK-{{ data["telephony_prefix"] }}-RF
+config mobility group domain TFH-{{ data["telephony_prefix"] }}-MG
+config network rf-network-name TFH-{{ data["telephony_prefix"] }}-RF
 
 {# secure the logins #}
 config mgmtuser add {{ data["creds"]["username"] }} {{ data["creds"]["password"] }} read-write
@@ -210,7 +210,7 @@ config advanced 802.11a channel add 161
 config advanced 802.11a channel delete 165
 
 
-{# WLAN 14 {{SHK-101-DATA}} #}
+{# WLAN 14 {{TFH-101-DATA}} #}
 
 config wlan create 14 {{ data["wlan"]["data"]["ssid"] }} {{ data["wlan"]["data"]["ssid"] }}
 
@@ -283,7 +283,7 @@ config wlan security wpa akm psk set-key ascii {{ data["wlan"]["data"]["psk"] }}
 config wlan enable 14
 
 
-{# WLAN 15 {{SHK-101-BIOMED}} #}
+{# WLAN 15 {{TFH-101-BIOMED}} #}
 config wlan create 15 {{ data["wlan"]["biomed"]["ssid"] }} {{ data["wlan"]["biomed"]["ssid"] }}
 
 config wlan radio 15 all
@@ -355,7 +355,7 @@ config wlan security wpa akm psk set-key ascii {{ data["wlan"]["biomed"]["psk"] 
 config wlan enable 15
 
 
-{# WLAN 16 {{SHK-101-VOICE}} #}
+{# WLAN 16 {{TFH-101-VOICE}} #}
 
 config wlan create 16 {{ data["wlan"]["voice"]["ssid"] }} {{ data["wlan"]["voice"]["ssid"] }}
 

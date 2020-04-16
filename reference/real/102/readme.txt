@@ -1,6 +1,6 @@
-login username: SHK-102-ADMIN
-login password: k7kwIfrz1ufp
-enable password: k7kwIfrz1ufp
+login username: TFH-102-ADMIN
+login password: SqfFl6CSeY5U
+enable password: SqfFl6CSeY5U
 
 domain name: hospital.com
 dmvpn target: 192.0.2.1
@@ -64,6 +64,6 @@ Addressing on asw5:
 
 
 WLANs (SSID and PSK):
-- data: SHK-102-DATA / 2DE56Ga1
-- biomed: SHK-102-BIOMED / OaeWTyTH
-- voice: SHK-102-VOICE / otQf6BQZ
+- data: TFH-102-DATA / EE21mrF5
+- biomed: TFH-102-BIOMED / MX2MLM24
+- voice: TFH-102-VOICE / 73dt3s0C

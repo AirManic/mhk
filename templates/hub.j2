@@ -5,10 +5,10 @@ service timestamps debug datetime msec localtime
 service timestamps log datetime msec localtime
 service password-encryption
 !
-hostname SHK-HUB-RTR
+hostname TFH-HUB-RTR
 ip domain-name {{ data["domain_name"] }}
-username SHK-ADMIN privilege 15 secret SHK-PASSWORD
-enable secret SHK-PASSWORD
+username TFH-ADMIN privilege 15 secret TFH-PASSWORD
+enable secret TFH-PASSWORD
 !
 aaa new-model
 aaa local authentication attempts max-fail 5
@@ -152,7 +152,7 @@ interface {{ data["dmvpn_source"]["interface"] }}
 !
 ip route vrf FVRF_INTERNET 0.0.0.0 0.0.0.0 {{ data["dmvpn_source"]["ipv4"]["nhop"] }} name INTERNET_DEFAULT
 !
-router eigrp SHK
+router eigrp TFH
  !
  address-family ipv4 unicast autonomous-system 1
   !

@@ -1,6 +1,6 @@
 [![Build Status](https://travis-ci.com/nickrusso42518/mhk.svg?branch=master)](https://travis-ci.com/nickrusso42518/mhk)
 
-# Cisco Surge Hospital Kit (SHK)
+# Cisco Temporary Field Hospital (TFH)
 Experimental script to build configurations for all devices in the kit.
 
 After running the script, the `telephony_prefix` specified for each
@@ -26,11 +26,11 @@ hub:
     hospital_peer: 192.0.2.129
     hospital_asn: 65002
 
-shk:
+tfh:
   - telephony_prefix: 101
     ipv4_network: 192.168.0.0/22
     domain_name: hospital.com
-    dmvpn_target: shkhub.hospital.com
+    dmvpn_target: tfhhub.hospital.com
     index_offset: 0
   - telephony_prefix: 102
     ipv4_network: 192.168.4.0/22
@@ -67,5 +67,5 @@ outputs/
 `-- hub.txt
 ```
 
-There is also a `shk_configs.zip` file that is automatically created as
+There is also a `tfh_configs.zip` file that is automatically created as
 an additional artifact from the script. This improves config portability.
