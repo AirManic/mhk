@@ -432,37 +432,52 @@ config acl counter start
 config acl create Cisco8821-Provision
 
 config acl rule add Cisco8821-Provision 1
-config acl rule source port range Cisco8821-Provision 1 68 68
 config acl rule protocol Cisco8821-Provision 1 17
-config acl rule direction Cisco8821-Provision 1 in
+config acl rule source port range Cisco8821-Provision 1 68 68
 config acl rule destination port range Cisco8821-Provision 1 67 67
+config acl rule direction Cisco8821-Provision 1 in
 config acl rule action Cisco8821-Provision 1 permit
+
 config acl rule add Cisco8821-Provision 2
-config acl rule source port range Cisco8821-Provision 2 67 67
 config acl rule protocol Cisco8821-Provision 2 17
-config acl rule direction Cisco8821-Provision 2 out
+config acl rule source port range Cisco8821-Provision 2 67 67
 config acl rule destination port range Cisco8821-Provision 2 68 68
+config acl rule direction Cisco8821-Provision 2 out
 config acl rule action Cisco8821-Provision 2 permit
+
 config acl rule add Cisco8821-Provision 3
-config acl rule source port range Cisco8821-Provision 3 0 65535
 config acl rule protocol Cisco8821-Provision 3 17
+config acl rule source port range Cisco8821-Provision 3 0 65535
+config acl rule destination port range Cisco8821-Provision 3 5060 5061
 config acl rule direction Cisco8821-Provision 3 in
-config acl rule destination port range Cisco8821-Provision 3 0 65535
-config acl rule destination address Cisco8821-Provision 3 {{ data["addr"]["rtr"]["lb0"] }} 255.255.255.255
-config acl rule action Cisco8821-Provision 3 permit
+config acl rule action Cisco8821-Provision 3 deny
+
 config acl rule add Cisco8821-Provision 4
-config acl rule source port range Cisco8821-Provision 4 0 65535
-config acl rule source address Cisco8821-Provision 4 {{ data["addr"]["rtr"]["lb0"] }} 255.255.255.255
 config acl rule protocol Cisco8821-Provision 4 17
-config acl rule direction Cisco8821-Provision 4 out
+config acl rule source port range Cisco8821-Provision 4 5060 5061
 config acl rule destination port range Cisco8821-Provision 4 0 65535
-config acl rule action Cisco8821-Provision 4 permit
+config acl rule direction Cisco8821-Provision 4 out
+config acl rule action Cisco8821-Provision 4 deny
+
 config acl rule add Cisco8821-Provision 5
+config acl rule protocol Cisco8821-Provision 5 17
 config acl rule source port range Cisco8821-Provision 5 0 65535
+config acl rule destination address Cisco8821-Provision 5 {{ data["addr"]["rtr"]["lb0"] }} 255.255.255.255
 config acl rule destination port range Cisco8821-Provision 5 0 65535
-config acl rule add Cisco8821-Provision 65
-config acl rule source port range Cisco8821-Provision 65 0 65535
-config acl rule destination port range Cisco8821-Provision 65 0 65535
+config acl rule direction Cisco8821-Provision 5 in
+config acl rule action Cisco8821-Provision 5 permit
+
+config acl rule add Cisco8821-Provision 6
+config acl rule protocol Cisco8821-Provision 6 17
+config acl rule source address Cisco8821-Provision 6 {{ data["addr"]["rtr"]["lb0"] }} 255.255.255.255
+config acl rule source port range Cisco8821-Provision 6 0 65535
+config acl rule destination port range Cisco8821-Provision 6 0 65535
+config acl rule direction Cisco8821-Provision 6 out
+config acl rule action Cisco8821-Provision 6 permit
+
+config acl rule add Cisco8821-Provision 7
+config acl rule direction Cisco8821-Provision 7 any
+config acl rule action Cisco8821-Provision 7 deny
 
 config acl apply Cisco8821-Provision
 

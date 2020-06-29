@@ -3,11 +3,11 @@ service timestamps debug datetime msec
 service timestamps log datetime msec
 service password-encryption
 !
-hostname TFH-102-WGB
+hostname POP-102-WGB
 !
 logging rate-limit console 9
-username TFH-102-ADMIN password SqfFl6CSeY5U
-enable secret SqfFl6CSeY5U
+username POP-102-ADMIN password 9jGep2RaIzoc
+enable secret 9jGep2RaIzoc
 !
 no aaa new-model
 no ip source-route
@@ -23,20 +23,20 @@ ip dhcp pool POOL_Cisco8821-Provision
 dot11 pause-time 100
 dot11 syslog
 !
-dot11 ssid TFH-102-DATA
+dot11 ssid POP-102-DATA
  authentication open
  authentication key-management wpa version 2
- wpa-psk ascii EE21mrF5
+ wpa-psk ascii K9iFZQ6m
 !
-dot11 ssid TFH-102-BIOMED
+dot11 ssid POP-102-SPECIAL
  authentication open
  authentication key-management wpa version 2
- wpa-psk ascii MX2MLM24
+ wpa-psk ascii i7ndILyD
 !
-dot11 ssid TFH-102-VOICE
+dot11 ssid POP-102-VOICE
  authentication open
  authentication key-management wpa version 2
- wpa-psk ascii 73dt3s0C
+ wpa-psk ascii 5bokBLgn
 !
 dot11 ssid cisco
  authentication open
@@ -63,7 +63,7 @@ interface Dot11Radio1
  no ip address
  shutdown
  encryption mode ciphers aes-ccm
- ssid TFH-102-DATA
+ ssid POP-102-DATA
  antenna gain 0
  peakdetect
  stbc
