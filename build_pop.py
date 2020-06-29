@@ -2,7 +2,7 @@
 
 """
 Author: Nick Russo (nickrus@cisco.com)
-Purpose: Build a new Temporary Field Hospital (TFH) configuration set.
+Purpose: Build a new Pop-up site (POP) configuration set.
 """
 
 import random
@@ -28,7 +28,7 @@ def main():
     if not os.path.exists("outputs"):
         os.makedirs("outputs")
 
-    # Only generate one hub config for the entire TFH run
+    # Only generate one hub config for the entire POP run
     j2_env = Environment(loader=FileSystemLoader("."), autoescape=True)
     template = j2_env.get_template("templates/hub.j2")
     config = template.render(data=initial["hub"])
@@ -37,11 +37,11 @@ def main():
     with open(f"outputs/hub.txt", "w") as handle:
         handle.write(config)
 
-    # Collect all TFH template files once (not in loop)
-    template_files = glob.glob("templates/tfh/*.j2")
+    # Collect all POP template files once (not in loop)
+    template_files = glob.glob("templates/pop/*.j2")
 
     # Iterate over each node in the node_list with a counter
-    for i, node in enumerate(initial["tfh"]):
+    for i, node in enumerate(initial["pop"]):
         # Extract data for each node and update index with offset
         data = process_node(node)
         data["index"] = i + node["index_offset"]
@@ -72,7 +72,7 @@ def create_zip(path_to_zip):
     """
     Create ZIP archive of entire outputs/ directory for easy transporation.
     """
-    with ZipFile("tfh_configs.zip", "w") as handle:
+    with ZipFile("pop_configs.zip", "w") as handle:
         for filename in glob.glob(f"{path_to_zip}/**", recursive=True):
             handle.write(filename)
 
@@ -92,10 +92,10 @@ def process_node(node):
     subnets = {
         "full": network,
         "data": first,
-        "biomed": list(second.subnets(prefixlen_diff=3))[0],
+        "special": list(second.subnets(prefixlen_diff=3))[0],
         "voice": list(second.subnets(prefixlen_diff=3))[1],
         "mgmt": list(second.subnets(prefixlen_diff=4))[4],
-        "special": list(second.subnets(prefixlen_diff=5))[10],
+        "optional": list(second.subnets(prefixlen_diff=5))[10],
         "loopback": list(second.subnets(prefixlen_diff=5))[11],
     }
 
@@ -105,18 +105,18 @@ def process_node(node):
         "dsw": {
             "lb0": subnets["loopback"][2],
             "data_svi10": subnets["data"][-2],
-            "biomed_svi20": subnets["biomed"][-2],
+            "special_svi20": subnets["special"][-2],
             "voice_svi30": subnets["voice"][-2],
             "mgmt_svi40": subnets["mgmt"][-2],
-            "special_svi50": subnets["special"][-2],
+            "optional_svi50": subnets["optional"][-2],
         },
         "wlc": {
             "data_svi10": subnets["data"][-6],
-            "biomed_svi20": subnets["biomed"][-6],
+            "special_svi20": subnets["special"][-6],
             "voice_svi30": subnets["voice"][-6],
             "mgmt_svi40": subnets["mgmt"][-6],
             "mgmt_svi40_hex": hex(int(subnets["mgmt"][-6]))[2:].upper(),
-            "special_svi50": subnets["special"][-6],
+            "optional_svi50": subnets["optional"][-6],
         },
         "asw1": {"mgmt_svi40": subnets["mgmt"][3]},
         "asw2": {"mgmt_svi40": subnets["mgmt"][4]},
@@ -126,10 +126,10 @@ def process_node(node):
     }
 
     # Assemble WLANs with SSID names and random plain-text PSKs
-    ssid_prefix = f"TFH-{node['telephony_prefix']}"
+    ssid_prefix = f"POP-{node['telephony_prefix']}"
     wlan = {
         "data": {"ssid": f"{ssid_prefix}-DATA", "psk": generate_psk()},
-        "biomed": {"ssid": f"{ssid_prefix}-BIOMED", "psk": generate_psk()},
+        "special": {"ssid": f"{ssid_prefix}-SPECIAL", "psk": generate_psk()},
         "voice": {"ssid": f"{ssid_prefix}-VOICE", "psk": generate_psk()},
     }
 

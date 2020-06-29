@@ -12,7 +12,7 @@ aaa local authentication attempts max-fail 5
 aaa authentication login default local
 aaa authorization exec default local
 !
-hostname TFH-{{ tel }}-RTR
+hostname POP-{{ tel }}-RTR
 username {{ data["creds"]["username"] }} privilege 15 secret {{ data["creds"]["password"] }}
 enable secret {{ data["creds"]["password"] }}
 !
@@ -233,7 +233,7 @@ interface GigabitEthernet0
  shutdown
  negotiation auto
 !
-router eigrp TFH
+router eigrp POP
  !
  address-family ipv4 unicast autonomous-system 1
   !
@@ -280,7 +280,7 @@ banner motd %
 ----------------------------------------------------------------------
 NOTICE TO USERS
 This is an official computer system and is the property of the
-hospital. It is for authorized users only. Unauthorized users
+company. It is for authorized users only. Unauthorized users
 are prohibited. Users (authorized or unauthorized) have no explicit
 or implicit expectation of privacy. Any or all uses of this system
 may be subject to one or more of the following actions: interception,
