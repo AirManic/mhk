@@ -34,7 +34,7 @@ def main():
     config = template.render(data=initial["hub"])
 
     # Write hub config to output directory (top level)
-    with open(f"outputs/hub.txt", "w") as handle:
+    with open("outputs/hub.txt", "w") as handle:
         handle.write(config)
 
     # Collect all POP template files once (not in loop)
