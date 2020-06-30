@@ -16,7 +16,7 @@ ip dhcp snooping
 ip dhcp snooping vlan 10,20,30,50,90
 no ip dhcp snooping information option
 no ip dhcp conflict logging
-hostname TFH-{{ data["telephony_prefix"] }}-DSW
+hostname POP-{{ data["telephony_prefix"] }}-DSW
 ip domain-name {{ data["domain_name"] }}
 username {{ data["creds"]["username"] }} privilege 15 secret {{ data["creds"]["password"] }}
 enable secret {{ data["creds"]["password"] }}
@@ -29,13 +29,13 @@ no vstack
 vlan 10
  name DATA
 vlan 20
- name BIOMED
+ name SPECIAL
 vlan 30
  name VOICE
 vlan 40
  name MGMT
 vlan 50
- name SPECIAL
+ name OPTIONAL
 vlan 90
  name TRUNK_AP
 !
@@ -49,10 +49,10 @@ ip dhcp pool DATA_VLAN10
  default-router {{ data["addr"]["dsw"]["data_svi10"] }}
  option 43 hex F104{{ data["addr"]["wlc"]["mgmt_svi40_hex"] }}
 !
-ip dhcp excluded-address {{ data["addr"]["dsw"]["biomed_svi20"] - 4 }} {{ data["addr"]["dsw"]["biomed_svi20"] }}
-ip dhcp pool BIOMED_VLAN20
- network {{ data["subnets"]["biomed"].with_netmask.replace("/", " ") }}
- default-router {{ data["addr"]["dsw"]["biomed_svi20"] }}
+ip dhcp excluded-address {{ data["addr"]["dsw"]["special_svi20"] - 4 }} {{ data["addr"]["dsw"]["special_svi20"] }}
+ip dhcp pool SPECIAL_VLAN20
+ network {{ data["subnets"]["special"].with_netmask.replace("/", " ") }}
+ default-router {{ data["addr"]["dsw"]["special_svi20"] }}
  option 43 hex F104{{ data["addr"]["wlc"]["mgmt_svi40_hex"] }}
 !
 ip dhcp excluded-address {{ data["addr"]["dsw"]["voice_svi30"] - 4 }} {{ data["addr"]["dsw"]["voice_svi30"] }}
@@ -61,10 +61,10 @@ ip dhcp pool VOICE_VLAN30
  default-router {{ data["addr"]["dsw"]["voice_svi30"] }}
  option 150 ip {{ data["addr"]["rtr"]["lb0"] }}
 !
-ip dhcp excluded-address {{ data["addr"]["dsw"]["special_svi50"] - 4 }} {{ data["addr"]["dsw"]["special_svi50"] }}
-ip dhcp pool SPECIAL_VLAN50
- network {{ data["subnets"]["special"].with_netmask.replace("/", " ") }}
- default-router {{ data["addr"]["dsw"]["special_svi50"] }}
+ip dhcp excluded-address {{ data["addr"]["dsw"]["optional_svi50"] - 4 }} {{ data["addr"]["dsw"]["optional_svi50"] }}
+ip dhcp pool OPTIONAL_VLAN50
+ network {{ data["subnets"]["optional"].with_netmask.replace("/", " ") }}
+ default-router {{ data["addr"]["dsw"]["optional_svi50"] }}
  option 43 hex F104{{ data["addr"]["wlc"]["mgmt_svi40_hex"] }}
 !
 ip dhcp excluded-address 192.0.2.1
@@ -124,7 +124,7 @@ ip access-list standard ACL_VTY_ACCESS
 ip access-list extended ACL_DATA_IN
  permit ip any any
 !
-ip access-list extended ACL_BIOMED_IN
+ip access-list extended ACL_SPECIAL_IN
  permit ip any any
 !
 ip access-list extended ACL_VOICE_IN
@@ -140,7 +140,7 @@ ip access-list extended ACL_MGMT_OUT
  permit ip any any
 !
 ip domain-name {{ data["domain_name"] }}
-ip access-list extended ACL_SPECIAL_IN
+ip access-list extended ACL_OPTIONAL_IN
  permit ip any any
 !
 no ip http server
@@ -155,10 +155,10 @@ interface Vlan10
  no shutdown
 !
 interface Vlan20
- description BIOMED VLAN
- ip address {{ data["addr"]["dsw"]["biomed_svi20"] }} {{ data["subnets"]["biomed"].netmask }}
+ description SPECIAL VLAN
+ ip address {{ data["addr"]["dsw"]["special_svi20"] }} {{ data["subnets"]["special"].netmask }}
  ip verify unicast source reachable-via rx
- ip access-group ACL_BIOMED_IN in
+ ip access-group ACL_SPECIAL_IN in
  ip pim sparse-mode
  no shutdown
 !
@@ -178,10 +178,10 @@ interface Vlan40
  no shutdown
 !
 interface Vlan50
- description SPECIAL (EXCEPTIONS) VLAN
- ip address {{ data["addr"]["dsw"]["special_svi50"] }} {{ data["subnets"]["special"].netmask }} 
+ description OPTIONAL (EXCEPTIONS) VLAN
+ ip address {{ data["addr"]["dsw"]["optional_svi50"] }} {{ data["subnets"]["optional"].netmask }} 
  ip verify unicast source reachable-via rx
- ip access-group ACL_SPECIAL_IN in
+ ip access-group ACL_OPTIONAL_IN in
  ip pim sparse-mode
  no shutdown
 !
@@ -191,7 +191,7 @@ interface Vlan90
  ip verify unicast source reachable-via rx
  no shutdown
 !
-router eigrp TFH
+router eigrp POP
  !
  address-family ipv4 unicast autonomous-system 1
   !
@@ -215,7 +215,7 @@ banner motd %
 ----------------------------------------------------------------------
 NOTICE TO USERS
 This is an official computer system and is the property of the
-hospital. It is for authorized users only. Unauthorized users
+company. It is for authorized users only. Unauthorized users
 are prohibited. Users (authorized or unauthorized) have no explicit
 or implicit expectation of privacy. Any or all uses of this system
 may be subject to one or more of the following actions: interception,

@@ -5,10 +5,10 @@ service timestamps debug datetime msec localtime
 service timestamps log datetime msec localtime
 service password-encryption
 !
-hostname TFH-HUB-RTR
+hostname POP-HUB-RTR
 ip domain-name 
-username TFH-ADMIN privilege 15 secret TFH-PASSWORD
-enable secret TFH-PASSWORD
+username POP-ADMIN privilege 15 secret POP-PASSWORD
+enable secret POP-PASSWORD
 !
 aaa new-model
 aaa local authentication attempts max-fail 5
@@ -152,7 +152,7 @@ interface GigabitEthernet0/0/0
 !
 ip route vrf FVRF_INTERNET 0.0.0.0 0.0.0.0 192.0.2.2 name INTERNET_DEFAULT
 !
-router eigrp TFH
+router eigrp POP
  !
  address-family ipv4 unicast autonomous-system 1
   !
@@ -172,9 +172,9 @@ router eigrp TFH
 !
 router bgp 65001
  no bgp default ipv4-unicast
- neighbor 192.0.2.129 remote-as 65002
+ neighbor 203.0.113.99 remote-as 65002
  address-family ipv4
-  neighbor 192.0.2.129 activate
+  neighbor 203.0.113.99 activate
 !
 no ip forward-protocol nd
 no ip http server

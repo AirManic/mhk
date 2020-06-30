@@ -10,7 +10,7 @@ aaa local authentication attempts max-fail 5
 aaa authentication login default local
 aaa authorization exec default local
 !
-hostname TFH-{{ data["telephony_prefix"] }}-ASW5
+hostname POP-{{ data["telephony_prefix"] }}-ASW4
 ip domain-name {{ data["domain_name"] }}
 username {{ data["creds"]["username"] }} privilege 15 secret {{ data["creds"]["password"] }}
 enable secret {{ data["creds"]["password"] }}
@@ -24,13 +24,13 @@ vtp mode off
 vlan 10
  name DATA
 vlan 20
- name BIOMED
+ name SPECIAL
 vlan 30
  name VOICE
 vlan 40
  name MGMT
 vlan 50
- name SPECIAL
+ name OPTIONAL
 vlan 90
  name TRUNK_AP
 !
@@ -63,7 +63,7 @@ interface GigabitEthernet1/0/{{ i+1 }}
 {% endfor %}
 interface Vlan40
  description MGMT VLAN
- ip address {{ data["addr"]["asw5"]["mgmt_svi40"] }} {{ data["subnets"]["mgmt"].netmask }}
+ ip address {{ data["addr"]["asw4"]["mgmt_svi40"] }} {{ data["subnets"]["mgmt"].netmask }}
  no shutdown
 !
 ip default-gateway {{ data["addr"]["dsw"]["mgmt_svi40"] }}
@@ -71,7 +71,7 @@ banner motd %
 ----------------------------------------------------------------------
 NOTICE TO USERS
 This is an official computer system and is the property of the
-hospital. It is for authorized users only. Unauthorized users
+company. It is for authorized users only. Unauthorized users
 are prohibited. Users (authorized or unauthorized) have no explicit
 or implicit expectation of privacy. Any or all uses of this system
 may be subject to one or more of the following actions: interception,

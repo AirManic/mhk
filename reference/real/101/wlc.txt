@@ -1,21 +1,18 @@
-# WLC Config Begin .. template date 2020
 ! PID: AIR-CT3504-K9
 ! Product Version: 8.5.161.0
 
 
+config sysname POP-101-WLC
+config prompt POP-101-WLC
 
 
-config sysname TFH-101-WLC
-config prompt TFH-101-WLC
+config mobility group domain POP-101-MG
+config network rf-network-name POP-101-RF
 
 
-config mobility group domain TFH-101-MG
-config network rf-network-name TFH-101-RF
-
-
-config mgmtuser add TFH-101-ADMIN SjB4jC2YWEjM read-write
-config mgmtuser telnet TFH-101-ADMIN disable
-config ap mgmtuser add username TFH-101-ADMIN password SjB4jC2YWEjM secret SjB4jC2YWEjM all
+config mgmtuser add POP-101-ADMIN uZrt1E2ouhoZ read-write
+config mgmtuser telnet POP-101-ADMIN disable
+config ap mgmtuser add username POP-101-ADMIN password uZrt1E2ouhoZ secret uZrt1E2ouhoZ all
 
 
 config time ntp server 1 192.168.2.177
@@ -84,12 +81,12 @@ config interface address dynamic-interface data 192.168.1.250 255.255.254.0 192.
 config interface dhcp dynamic-interface data primary 192.168.1.254
 config interface dhcp dynamic-interface data proxy-mode disable
 
-config interface create biomed 20
-config interface vlan biomed 20
-config interface port biomed 5
-config interface address dynamic-interface biomed 192.168.2.58 255.255.255.192 192.168.2.62
-config interface dhcp dynamic-interface biomed primary 192.168.2.62
-config interface dhcp dynamic-interface biomed proxy-mode disable
+config interface create special 20
+config interface vlan special 20
+config interface port special 5
+config interface address dynamic-interface special 192.168.2.58 255.255.255.192 192.168.2.62
+config interface dhcp dynamic-interface special primary 192.168.2.62
+config interface dhcp dynamic-interface special proxy-mode disable
 
 config interface create voice 30
 config interface vlan voice 30
@@ -101,8 +98,8 @@ config interface dhcp dynamic-interface voice proxy-mode disable
 config interface create special 50
 config interface vlan special 50
 config interface port special 5
-config interface address dynamic-interface special 192.168.2.170 255.255.255.240 192.168.2.174
-config interface dhcp dynamic-interface special primary 192.168.2.174
+config interface address dynamic-interface special  255.255.255.192 
+config interface dhcp dynamic-interface special primary 
 config interface dhcp dynamic-interface special proxy-mode disable
 
 
@@ -212,7 +209,7 @@ config advanced 802.11a channel delete 165
 
 
 
-config wlan create 14 TFH-101-DATA TFH-101-DATA
+config wlan create 14 POP-101-DATA POP-101-DATA
 
 config wlan radio 14 all
 config wlan interface 14 data
@@ -278,16 +275,16 @@ config wlan profiling local http disable 14
 
 config wlan mdns disable 14
 
-config wlan security wpa akm psk set-key ascii wkngrxIm 14
+config wlan security wpa akm psk set-key ascii VlQ5548n 14
 
 config wlan enable 14
 
 
 
-config wlan create 15 TFH-101-BIOMED TFH-101-BIOMED
+config wlan create 15 POP-101-SPECIAL POP-101-SPECIAL
 
 config wlan radio 15 all
-config wlan interface 15 biomed
+config wlan interface 15 special
 config wlan broadcast-ssid enable 15
 
 config wlan nac radius disable 15
@@ -350,14 +347,14 @@ config wlan profiling local http disable 15
 
 config wlan mdns disable 15
 
-config wlan security wpa akm psk set-key ascii jqqnxxsa 15
+config wlan security wpa akm psk set-key ascii SSVNeVE8 15
 
 config wlan enable 15
 
 
 
 
-config wlan create 16 TFH-101-VOICE TFH-101-VOICE
+config wlan create 16 POP-101-VOICE POP-101-VOICE
 
 config wlan radio 16 all
 config wlan interface 16 voice
@@ -423,7 +420,7 @@ config wlan profiling local http disable 16
 
 config wlan mdns disable 16
 
-config wlan security wpa akm psk set-key ascii plQta8eC 16
+config wlan security wpa akm psk set-key ascii AntTfLJO 16
 
 config wlan enable 16
 
@@ -435,37 +432,52 @@ config acl counter start
 config acl create Cisco8821-Provision
 
 config acl rule add Cisco8821-Provision 1
-config acl rule source port range Cisco8821-Provision 1 68 68
 config acl rule protocol Cisco8821-Provision 1 17
-config acl rule direction Cisco8821-Provision 1 in
+config acl rule source port range Cisco8821-Provision 1 68 68
 config acl rule destination port range Cisco8821-Provision 1 67 67
+config acl rule direction Cisco8821-Provision 1 in
 config acl rule action Cisco8821-Provision 1 permit
+
 config acl rule add Cisco8821-Provision 2
-config acl rule source port range Cisco8821-Provision 2 67 67
 config acl rule protocol Cisco8821-Provision 2 17
-config acl rule direction Cisco8821-Provision 2 out
+config acl rule source port range Cisco8821-Provision 2 67 67
 config acl rule destination port range Cisco8821-Provision 2 68 68
+config acl rule direction Cisco8821-Provision 2 out
 config acl rule action Cisco8821-Provision 2 permit
+
 config acl rule add Cisco8821-Provision 3
-config acl rule source port range Cisco8821-Provision 3 0 65535
 config acl rule protocol Cisco8821-Provision 3 17
+config acl rule source port range Cisco8821-Provision 3 0 65535
+config acl rule destination port range Cisco8821-Provision 3 5060 5061
 config acl rule direction Cisco8821-Provision 3 in
-config acl rule destination port range Cisco8821-Provision 3 0 65535
-config acl rule destination address Cisco8821-Provision 3 192.168.2.177 255.255.255.255
-config acl rule action Cisco8821-Provision 3 permit
+config acl rule action Cisco8821-Provision 3 deny
+
 config acl rule add Cisco8821-Provision 4
-config acl rule source port range Cisco8821-Provision 4 0 65535
-config acl rule source address Cisco8821-Provision 4 192.168.2.177 255.255.255.255
 config acl rule protocol Cisco8821-Provision 4 17
-config acl rule direction Cisco8821-Provision 4 out
+config acl rule source port range Cisco8821-Provision 4 5060 5061
 config acl rule destination port range Cisco8821-Provision 4 0 65535
-config acl rule action Cisco8821-Provision 4 permit
+config acl rule direction Cisco8821-Provision 4 out
+config acl rule action Cisco8821-Provision 4 deny
+
 config acl rule add Cisco8821-Provision 5
+config acl rule protocol Cisco8821-Provision 5 17
 config acl rule source port range Cisco8821-Provision 5 0 65535
+config acl rule destination address Cisco8821-Provision 5 192.168.2.177 255.255.255.255
 config acl rule destination port range Cisco8821-Provision 5 0 65535
-config acl rule add Cisco8821-Provision 65
-config acl rule source port range Cisco8821-Provision 65 0 65535
-config acl rule destination port range Cisco8821-Provision 65 0 65535
+config acl rule direction Cisco8821-Provision 5 in
+config acl rule action Cisco8821-Provision 5 permit
+
+config acl rule add Cisco8821-Provision 6
+config acl rule protocol Cisco8821-Provision 6 17
+config acl rule source address Cisco8821-Provision 6 192.168.2.177 255.255.255.255
+config acl rule source port range Cisco8821-Provision 6 0 65535
+config acl rule destination port range Cisco8821-Provision 6 0 65535
+config acl rule direction Cisco8821-Provision 6 out
+config acl rule action Cisco8821-Provision 6 permit
+
+config acl rule add Cisco8821-Provision 7
+config acl rule direction Cisco8821-Provision 7 any
+config acl rule action Cisco8821-Provision 7 deny
 
 config acl apply Cisco8821-Provision
 
@@ -500,5 +512,3 @@ config wlan session-timeout 13 1800
 config wlan mfp client enable 13
 
 config wlan enable 13
-
-# WLC Config End

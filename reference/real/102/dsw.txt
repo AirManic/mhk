@@ -16,10 +16,10 @@ ip dhcp snooping
 ip dhcp snooping vlan 10,20,30,50,90
 no ip dhcp snooping information option
 no ip dhcp conflict logging
-hostname TFH-102-DSW
-ip domain-name hospital.com
-username TFH-102-ADMIN privilege 15 secret SqfFl6CSeY5U
-enable secret SqfFl6CSeY5U
+hostname POP-102-DSW
+ip domain-name company.com
+username POP-102-ADMIN privilege 15 secret 9jGep2RaIzoc
+enable secret 9jGep2RaIzoc
 vtp mode off
 spanning-tree vlan 1-4094 priority 0
 spanning-tree mode rapid-pvst
@@ -29,13 +29,13 @@ no vstack
 vlan 10
  name DATA
 vlan 20
- name BIOMED
+ name SPECIAL
 vlan 30
  name VOICE
 vlan 40
  name MGMT
 vlan 50
- name SPECIAL
+ name OPTIONAL
 vlan 90
  name TRUNK_AP
 !
@@ -50,7 +50,7 @@ ip dhcp pool DATA_VLAN10
  option 43 hex F104C0A8069A
 !
 ip dhcp excluded-address 192.168.6.58 192.168.6.62
-ip dhcp pool BIOMED_VLAN20
+ip dhcp pool SPECIAL_VLAN20
  network 192.168.6.0 255.255.255.192
  default-router 192.168.6.62
  option 43 hex F104C0A8069A
@@ -62,7 +62,7 @@ ip dhcp pool VOICE_VLAN30
  option 150 ip 192.168.6.177
 !
 ip dhcp excluded-address 192.168.6.170 192.168.6.174
-ip dhcp pool SPECIAL_VLAN50
+ip dhcp pool OPTIONAL_VLAN50
  network 192.168.6.160 255.255.255.240
  default-router 192.168.6.174
  option 43 hex F104C0A8069A
@@ -586,7 +586,7 @@ ip access-list standard ACL_VTY_ACCESS
 ip access-list extended ACL_DATA_IN
  permit ip any any
 !
-ip access-list extended ACL_BIOMED_IN
+ip access-list extended ACL_SPECIAL_IN
  permit ip any any
 !
 ip access-list extended ACL_VOICE_IN
@@ -601,8 +601,8 @@ ip access-list extended ACL_MGMT_OUT
  deny   udp any any eq 5246
  permit ip any any
 !
-ip domain-name hospital.com
-ip access-list extended ACL_SPECIAL_IN
+ip domain-name company.com
+ip access-list extended ACL_OPTIONAL_IN
  permit ip any any
 !
 no ip http server
@@ -617,10 +617,10 @@ interface Vlan10
  no shutdown
 !
 interface Vlan20
- description BIOMED VLAN
+ description SPECIAL VLAN
  ip address 192.168.6.62 255.255.255.192
  ip verify unicast source reachable-via rx
- ip access-group ACL_BIOMED_IN in
+ ip access-group ACL_SPECIAL_IN in
  ip pim sparse-mode
  no shutdown
 !
@@ -640,10 +640,10 @@ interface Vlan40
  no shutdown
 !
 interface Vlan50
- description SPECIAL (EXCEPTIONS) VLAN
+ description OPTIONAL (EXCEPTIONS) VLAN
  ip address 192.168.6.174 255.255.255.240 
  ip verify unicast source reachable-via rx
- ip access-group ACL_SPECIAL_IN in
+ ip access-group ACL_OPTIONAL_IN in
  ip pim sparse-mode
  no shutdown
 !
@@ -653,7 +653,7 @@ interface Vlan90
  ip verify unicast source reachable-via rx
  no shutdown
 !
-router eigrp TFH
+router eigrp POP
  !
  address-family ipv4 unicast autonomous-system 1
   !
@@ -677,7 +677,7 @@ banner motd %
 ----------------------------------------------------------------------
 NOTICE TO USERS
 This is an official computer system and is the property of the
-hospital. It is for authorized users only. Unauthorized users
+company. It is for authorized users only. Unauthorized users
 are prohibited. Users (authorized or unauthorized) have no explicit
 or implicit expectation of privacy. Any or all uses of this system
 may be subject to one or more of the following actions: interception,

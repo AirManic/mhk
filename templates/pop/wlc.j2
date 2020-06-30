@@ -1,16 +1,13 @@
-# WLC Config Begin .. template date 2020
 ! PID: AIR-CT3504-K9
 ! Product Version: 8.5.161.0
 
-{# CHANGE ALL "-101-" references to kit designation #}
-
-{# needs to be unique across some context.  actual name format is not sacred.. just needs to be unique #}
-config sysname TFH-{{ data["telephony_prefix"] }}-WLC
-config prompt TFH-{{ data["telephony_prefix"] }}-WLC
+{# needs to be unique across some context #}
+config sysname POP-{{ data["telephony_prefix"] }}-WLC
+config prompt POP-{{ data["telephony_prefix"] }}-WLC
 
 {# Mobility Group & RF Group unique per kit #}
-config mobility group domain TFH-{{ data["telephony_prefix"] }}-MG
-config network rf-network-name TFH-{{ data["telephony_prefix"] }}-RF
+config mobility group domain POP-{{ data["telephony_prefix"] }}-MG
+config network rf-network-name POP-{{ data["telephony_prefix"] }}-RF
 
 {# secure the logins #}
 config mgmtuser add {{ data["creds"]["username"] }} {{ data["creds"]["password"] }} read-write
@@ -84,12 +81,12 @@ config interface address dynamic-interface data {{ data["addr"]["wlc"]["data_svi
 config interface dhcp dynamic-interface data primary {{ data["addr"]["dsw"]["data_svi10"] }}
 config interface dhcp dynamic-interface data proxy-mode disable
 
-config interface create biomed 20
-config interface vlan biomed 20
-config interface port biomed 5
-config interface address dynamic-interface biomed {{ data["addr"]["wlc"]["biomed_svi20"] }} {{ data["subnets"]["biomed"].netmask }} {{ data["addr"]["dsw"]["biomed_svi20"] }}
-config interface dhcp dynamic-interface biomed primary {{ data["addr"]["dsw"]["biomed_svi20"] }}
-config interface dhcp dynamic-interface biomed proxy-mode disable
+config interface create special 20
+config interface vlan special 20
+config interface port special 5
+config interface address dynamic-interface special {{ data["addr"]["wlc"]["special_svi20"] }} {{ data["subnets"]["special"].netmask }} {{ data["addr"]["dsw"]["special_svi20"] }}
+config interface dhcp dynamic-interface special primary {{ data["addr"]["dsw"]["special_svi20"] }}
+config interface dhcp dynamic-interface special proxy-mode disable
 
 config interface create voice 30
 config interface vlan voice 30
@@ -210,7 +207,7 @@ config advanced 802.11a channel add 161
 config advanced 802.11a channel delete 165
 
 
-{# WLAN 14 {{TFH-101-DATA}} #}
+{# WLAN 14 {{POP-101-DATA}} #}
 
 config wlan create 14 {{ data["wlan"]["data"]["ssid"] }} {{ data["wlan"]["data"]["ssid"] }}
 
@@ -283,11 +280,11 @@ config wlan security wpa akm psk set-key ascii {{ data["wlan"]["data"]["psk"] }}
 config wlan enable 14
 
 
-{# WLAN 15 {{TFH-101-BIOMED}} #}
-config wlan create 15 {{ data["wlan"]["biomed"]["ssid"] }} {{ data["wlan"]["biomed"]["ssid"] }}
+{# WLAN 15 {{POP-101-SPECIAL}} #}
+config wlan create 15 {{ data["wlan"]["special"]["ssid"] }} {{ data["wlan"]["special"]["ssid"] }}
 
 config wlan radio 15 all
-config wlan interface 15 biomed
+config wlan interface 15 special
 config wlan broadcast-ssid enable 15
 
 config wlan nac radius disable 15
@@ -350,12 +347,12 @@ config wlan profiling local http disable 15
 
 config wlan mdns disable 15
 
-config wlan security wpa akm psk set-key ascii {{ data["wlan"]["biomed"]["psk"] }} 15
+config wlan security wpa akm psk set-key ascii {{ data["wlan"]["special"]["psk"] }} 15
 
 config wlan enable 15
 
 
-{# WLAN 16 {{TFH-101-VOICE}} #}
+{# WLAN 16 {{POP-101-VOICE}} #}
 
 config wlan create 16 {{ data["wlan"]["voice"]["ssid"] }} {{ data["wlan"]["voice"]["ssid"] }}
 
@@ -435,37 +432,52 @@ config acl counter start
 config acl create Cisco8821-Provision
 
 config acl rule add Cisco8821-Provision 1
-config acl rule source port range Cisco8821-Provision 1 68 68
 config acl rule protocol Cisco8821-Provision 1 17
-config acl rule direction Cisco8821-Provision 1 in
+config acl rule source port range Cisco8821-Provision 1 68 68
 config acl rule destination port range Cisco8821-Provision 1 67 67
+config acl rule direction Cisco8821-Provision 1 in
 config acl rule action Cisco8821-Provision 1 permit
+
 config acl rule add Cisco8821-Provision 2
-config acl rule source port range Cisco8821-Provision 2 67 67
 config acl rule protocol Cisco8821-Provision 2 17
-config acl rule direction Cisco8821-Provision 2 out
+config acl rule source port range Cisco8821-Provision 2 67 67
 config acl rule destination port range Cisco8821-Provision 2 68 68
+config acl rule direction Cisco8821-Provision 2 out
 config acl rule action Cisco8821-Provision 2 permit
+
 config acl rule add Cisco8821-Provision 3
-config acl rule source port range Cisco8821-Provision 3 0 65535
 config acl rule protocol Cisco8821-Provision 3 17
+config acl rule source port range Cisco8821-Provision 3 0 65535
+config acl rule destination port range Cisco8821-Provision 3 5060 5061
 config acl rule direction Cisco8821-Provision 3 in
-config acl rule destination port range Cisco8821-Provision 3 0 65535
-config acl rule destination address Cisco8821-Provision 3 {{ data["addr"]["rtr"]["lb0"] }} 255.255.255.255
-config acl rule action Cisco8821-Provision 3 permit
+config acl rule action Cisco8821-Provision 3 deny
+
 config acl rule add Cisco8821-Provision 4
-config acl rule source port range Cisco8821-Provision 4 0 65535
-config acl rule source address Cisco8821-Provision 4 {{ data["addr"]["rtr"]["lb0"] }} 255.255.255.255
 config acl rule protocol Cisco8821-Provision 4 17
-config acl rule direction Cisco8821-Provision 4 out
+config acl rule source port range Cisco8821-Provision 4 5060 5061
 config acl rule destination port range Cisco8821-Provision 4 0 65535
-config acl rule action Cisco8821-Provision 4 permit
+config acl rule direction Cisco8821-Provision 4 out
+config acl rule action Cisco8821-Provision 4 deny
+
 config acl rule add Cisco8821-Provision 5
+config acl rule protocol Cisco8821-Provision 5 17
 config acl rule source port range Cisco8821-Provision 5 0 65535
+config acl rule destination address Cisco8821-Provision 5 {{ data["addr"]["rtr"]["lb0"] }} 255.255.255.255
 config acl rule destination port range Cisco8821-Provision 5 0 65535
-config acl rule add Cisco8821-Provision 65
-config acl rule source port range Cisco8821-Provision 65 0 65535
-config acl rule destination port range Cisco8821-Provision 65 0 65535
+config acl rule direction Cisco8821-Provision 5 in
+config acl rule action Cisco8821-Provision 5 permit
+
+config acl rule add Cisco8821-Provision 6
+config acl rule protocol Cisco8821-Provision 6 17
+config acl rule source address Cisco8821-Provision 6 {{ data["addr"]["rtr"]["lb0"] }} 255.255.255.255
+config acl rule source port range Cisco8821-Provision 6 0 65535
+config acl rule destination port range Cisco8821-Provision 6 0 65535
+config acl rule direction Cisco8821-Provision 6 out
+config acl rule action Cisco8821-Provision 6 permit
+
+config acl rule add Cisco8821-Provision 7
+config acl rule direction Cisco8821-Provision 7 any
+config acl rule action Cisco8821-Provision 7 deny
 
 config acl apply Cisco8821-Provision
 
@@ -500,6 +512,3 @@ config wlan session-timeout 13 1800
 config wlan mfp client enable 13
 
 config wlan enable 13
-
-# WLC Config End
-

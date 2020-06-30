@@ -1,9 +1,9 @@
-login username: TFH-101-ADMIN
-login password: SjB4jC2YWEjM
-enable password: SjB4jC2YWEjM
+login username: POP-101-ADMIN
+login password: uZrt1E2ouhoZ
+enable password: uZrt1E2ouhoZ
 
-domain name: hospital.com
-dmvpn target: tfhhub.hospital.com
+domain name: company.com
+dmvpn target: pophub.company.com
 
 3-digit telephony prefix: 101
 -------------------------------
@@ -20,10 +20,10 @@ manual range = 10161 - 10199
 Subnets:
 - full: 192.168.0.0/22
 - data: 192.168.0.0/23
-- biomed: 192.168.2.0/26
+- special: 192.168.2.0/26
 - voice: 192.168.2.64/26
 - mgmt: 192.168.2.128/27
-- special: 192.168.2.160/28
+- optional: 192.168.2.160/28
 - loopback: 192.168.2.176/28
 
 
@@ -33,18 +33,18 @@ Addressing on rtr:
 Addressing on dsw:
 - lb0: 192.168.2.178
 - data_svi10: 192.168.1.254
-- biomed_svi20: 192.168.2.62
+- special_svi20: 192.168.2.62
 - voice_svi30: 192.168.2.126
 - mgmt_svi40: 192.168.2.158
-- special_svi50: 192.168.2.174
+- optional_svi50: 192.168.2.174
 
 Addressing on wlc:
 - data_svi10: 192.168.1.250
-- biomed_svi20: 192.168.2.58
+- special_svi20: 192.168.2.58
 - voice_svi30: 192.168.2.122
 - mgmt_svi40: 192.168.2.154
 - mgmt_svi40_hex: C0A8029A
-- special_svi50: 192.168.2.170
+- optional_svi50: 192.168.2.170
 
 Addressing on asw1:
 - mgmt_svi40: 192.168.2.131
@@ -64,6 +64,6 @@ Addressing on asw5:
 
 
 WLANs (SSID and PSK):
-- data: TFH-101-DATA / wkngrxIm
-- biomed: TFH-101-BIOMED / jqqnxxsa
-- voice: TFH-101-VOICE / plQta8eC
+- data: POP-101-DATA / VlQ5548n
+- special: POP-101-SPECIAL / SSVNeVE8
+- voice: POP-101-VOICE / AntTfLJO
