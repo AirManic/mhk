@@ -3,7 +3,7 @@ service timestamps debug datetime msec
 service timestamps log datetime msec
 service password-encryption
 !
-hostname TFH-{{ data["telephony_prefix"] }}-WGB
+hostname POP-{{ data["telephony_prefix"] }}-WGB
 !
 logging rate-limit console 9
 username {{ data["creds"]["username"] }} password {{ data["creds"]["password"] }}
@@ -28,10 +28,10 @@ dot11 ssid {{ data["wlan"]["data"]["ssid"] }}
  authentication key-management wpa version 2
  wpa-psk ascii {{ data["wlan"]["data"]["psk"] }}
 !
-dot11 ssid {{ data["wlan"]["biomed"]["ssid"] }}
+dot11 ssid {{ data["wlan"]["special"]["ssid"] }}
  authentication open
  authentication key-management wpa version 2
- wpa-psk ascii {{ data["wlan"]["biomed"]["psk"] }}
+ wpa-psk ascii {{ data["wlan"]["special"]["psk"] }}
 !
 dot11 ssid {{ data["wlan"]["voice"]["ssid"] }}
  authentication open

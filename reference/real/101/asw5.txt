@@ -10,10 +10,10 @@ aaa local authentication attempts max-fail 5
 aaa authentication login default local
 aaa authorization exec default local
 !
-hostname TFH-101-ASW5
-ip domain-name hospital.com
-username TFH-101-ADMIN privilege 15 secret SjB4jC2YWEjM
-enable secret SjB4jC2YWEjM
+hostname POP-101-ASW5
+ip domain-name company.com
+username POP-101-ADMIN privilege 15 secret uZrt1E2ouhoZ
+enable secret uZrt1E2ouhoZ
 ip dhcp snooping
 ip dhcp snooping vlan 10,20,30,50,90
 no ip dhcp snooping information option
@@ -24,13 +24,13 @@ vtp mode off
 vlan 10
  name DATA
 vlan 20
- name BIOMED
+ name SPECIAL
 vlan 30
  name VOICE
 vlan 40
  name MGMT
 vlan 50
- name SPECIAL
+ name OPTIONAL
 vlan 90
  name TRUNK_AP
 !
@@ -566,7 +566,7 @@ banner motd %
 ----------------------------------------------------------------------
 NOTICE TO USERS
 This is an official computer system and is the property of the
-hospital. It is for authorized users only. Unauthorized users
+company. It is for authorized users only. Unauthorized users
 are prohibited. Users (authorized or unauthorized) have no explicit
 or implicit expectation of privacy. Any or all uses of this system
 may be subject to one or more of the following actions: interception,

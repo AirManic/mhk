@@ -11,7 +11,7 @@ lint:
 
 .PHONY: run
 run:
-	python build_tfh.py
+	python build_pop.py
 
 .PHONY: clean
 clean:
