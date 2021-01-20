@@ -1,5 +1,12 @@
-**.pyc
-**.zip
+# Compiled Python Code #
+*.pyc
+
+# OSX Files #
 .DS_Store
-.idea/*
+
+# Ignore Pycharm data #
+.idea/
+
+# Ignore outputs and zip
+**.zip
 outputs/*
